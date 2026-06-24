@@ -1,5 +1,3 @@
-library board_datetime_picker;
-
 import 'package:intl/intl.dart';
 
 export 'src/board_datetime_builder.dart'

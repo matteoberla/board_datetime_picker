@@ -31,7 +31,7 @@ abstract class BoardDateTimeContent<T extends BoardDateTimeCommonResult>
     this.keyboardHeightNotifier,
     this.onCreatedDateState,
     this.pickerFocusNode,
-    this.onKeyboadClose,
+    this.onKeyboardClose,
     this.onUpdateByClose,
     required this.headerWidget,
     required this.onTopActionBuilder,
@@ -61,7 +61,7 @@ abstract class BoardDateTimeContent<T extends BoardDateTimeCommonResult>
 
   final FocusNode? pickerFocusNode;
 
-  final void Function()? onKeyboadClose;
+  final void Function()? onKeyboardClose;
 
   /// Callback to update initial values if the date is never changed at close.
   /// Valid only for modal display.
@@ -229,9 +229,28 @@ abstract class BoardDatetimeContentState<T extends BoardDateTimeCommonResult,
 
   @override
   void dispose() {
+    _removeItemFocusListeners(itemOptions);
+    for (final x in itemOptions) {
+      x.focusNode.dispose();
+    }
+    if (isSelfKeyboardNotifier) {
+      keyboardHeightNotifier.dispose();
+    }
     openAnimationController.dispose();
     calendarAnimationController.dispose();
     super.dispose();
+  }
+
+  /// Removes the keyboard listeners registered in [setupOptions]
+  /// from the given options' focus nodes.
+  void _removeItemFocusListeners(List<BoardPickerItemOption> options) {
+    for (final x in options) {
+      if (x.type == DateType.year) {
+        x.focusNode.removeListener(yearKeyboardListener);
+      } else {
+        x.focusNode.removeListener(keyboardListener);
+      }
+    }
   }
 
   /// FocusNode (keyboard) listener
@@ -268,6 +287,8 @@ abstract class BoardDatetimeContentState<T extends BoardDateTimeCommonResult,
 
     final opts = widget.options.customOptions;
     final withSecond = widget.options.withSecond;
+
+    final oldItemOptions = itemOptions;
 
     List<BoardPickerItemOption> ymdOptions = [];
 
@@ -403,6 +424,19 @@ abstract class BoardDatetimeContentState<T extends BoardDateTimeCommonResult,
       }
     }
 
+    if (oldItemOptions.isNotEmpty) {
+      _removeItemFocusListeners(oldItemOptions);
+      // The ItemWidgets backed by oldItemOptions are still mounted at this
+      // point; they get replaced by the rebuild that this setState triggers.
+      // Defer disposal of their focus nodes until that rebuild has completed
+      // so the corresponding Focus widgets have already detached.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        for (final x in oldItemOptions) {
+          x.focusNode.dispose();
+        }
+      });
+    }
+
     pickerType = type;
   }
 
@@ -411,7 +445,7 @@ abstract class BoardDatetimeContentState<T extends BoardDateTimeCommonResult,
     for (final x in itemOptions) {
       if (x.focusNode.hasFocus) x.focusNode.unfocus();
     }
-    widget.onKeyboadClose?.call();
+    widget.onKeyboardClose?.call();
   }
 
   /// Handling of date changes made by the picker

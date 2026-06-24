@@ -38,7 +38,7 @@ class MultiBoardDateTimeContent<T extends BoardDateTimeCommonResult>
     super.keyboardHeightNotifier,
     super.onCreatedDateState,
     super.pickerFocusNode,
-    super.onKeyboadClose,
+    super.onKeyboardClose,
     super.onUpdateByClose,
     this.onChange,
     this.onResult,
@@ -190,6 +190,7 @@ class _MultiBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
   void dispose() {
     startDate.removeListener(notify);
     endDate.removeListener(notify);
+    currentDateType.dispose();
     super.dispose();
   }
 
@@ -319,7 +320,7 @@ class _MultiBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
       headerBuilder: (ctx) => _header,
       onChangeByCalendar: changeDate,
       onChangeByPicker: onChangeByPicker,
-      onKeyboadClose: closeKeyboard,
+      onKeyboardClose: closeKeyboard,
       keyboardHeightRatio: () => keyboardHeightRatio,
       startDate: startDate,
       endDate: endDate,
@@ -336,7 +337,7 @@ class _MultiBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
       child: SizeTransition(
         sizeFactor: animation,
         axis: Axis.vertical,
-        axisAlignment: -1.0,
+        alignment: const Alignment(-1.0, -1.0),
         // child: isWide ? _widebuilder() : _standardBuilder(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -417,7 +418,7 @@ class _MultiBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
       keyboardHeightRatio: keyboardHeightRatio,
       calendarAnimation: calendarAnimation,
       onCalendar: onCalendar,
-      onKeyboadClose: closeKeyboard,
+      onKeyboardClose: closeKeyboard,
       onClose: close,
       backgroundColor: widget.options.getBackgroundColor(context),
       foregroundColor: widget.options.getForegroundColor(context),

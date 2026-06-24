@@ -82,39 +82,39 @@ class DateTimeUtil {
     return null;
   }
 
-  static Map<int, AmpmCotrast> ampmContrastMap = {
+  static Map<int, AmpmContrast> ampmContrastMap = {
     ...ampmContrastAmMap,
     ...ampmContrastPmMap,
   };
 
-  static Map<int, AmpmCotrast> ampmContrastAmMap = {
-    0: AmpmCotrast.am(12, 0),
-    for (var i = 1; i <= 11; i++) i: AmpmCotrast.am(i, i),
+  static Map<int, AmpmContrast> ampmContrastAmMap = {
+    0: AmpmContrast.am(12, 0),
+    for (var i = 1; i <= 11; i++) i: AmpmContrast.am(i, i),
   };
 
-  static Map<int, AmpmCotrast> ampmContrastPmMap = {
-    12: AmpmCotrast.pm(12, 0),
-    for (var i = 13; i <= 23; i++) i: AmpmCotrast.pm(i - 12, i - 12),
+  static Map<int, AmpmContrast> ampmContrastPmMap = {
+    12: AmpmContrast.pm(12, 0),
+    for (var i = 13; i <= 23; i++) i: AmpmContrast.pm(i - 12, i - 12),
   };
 }
 
-class AmpmCotrast {
+class AmpmContrast {
   final AmPm ampm;
   final int hour;
   final int index;
 
-  AmpmCotrast({required this.ampm, required this.hour, required this.index});
+  AmpmContrast({required this.ampm, required this.hour, required this.index});
 
-  factory AmpmCotrast.am(int hour, int index) {
-    return AmpmCotrast(
+  factory AmpmContrast.am(int hour, int index) {
+    return AmpmContrast(
       ampm: AmPm.am,
       hour: hour,
       index: index,
     );
   }
 
-  factory AmpmCotrast.pm(int hour, int index) {
-    return AmpmCotrast(
+  factory AmpmContrast.pm(int hour, int index) {
+    return AmpmContrast(
       ampm: AmPm.pm,
       hour: hour,
       index: index,

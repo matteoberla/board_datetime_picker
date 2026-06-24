@@ -186,6 +186,12 @@ class _BoardDateTimeBuilderState<T extends BoardDateTimeCommonResult>
   }
 
   @override
+  void dispose() {
+    keyboardHeightNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     keyboardHeightNotifier.value = MediaQuery.of(context).viewInsets.bottom;
 
@@ -254,7 +260,7 @@ class SingleBoardDateTimeContent<T extends BoardDateTimeCommonResult>
     super.keyboardHeightNotifier,
     super.onCreatedDateState,
     super.pickerFocusNode,
-    super.onKeyboadClose,
+    super.onKeyboardClose,
     super.onUpdateByClose,
     required super.headerWidget,
     required super.onTopActionBuilder,
@@ -380,7 +386,7 @@ class _SingleBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
       headerBuilder: (ctx) => _header,
       onChangeByCalendar: changeDate,
       onChangeByPicker: onChangeByPicker,
-      onKeyboadClose: closeKeyboard,
+      onKeyboardClose: closeKeyboard,
       keyboardHeightRatio: () => keyboardHeightRatio,
     );
 
@@ -389,7 +395,7 @@ class _SingleBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
       child: SizeTransition(
         sizeFactor: animation,
         axis: Axis.vertical,
-        axisAlignment: -1.0,
+        alignment: const Alignment(-1.0, -1.0),
         // child: isWide ? _widebuilder() : _standardBuilder(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -447,7 +453,7 @@ class _SingleBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
         keyboardHeightRatio: keyboardHeightRatio,
         calendarAnimation: calendarAnimation,
         onCalendar: onCalendar,
-        onKeyboadClose: closeKeyboard,
+        onKeyboardClose: closeKeyboard,
         onClose: close,
         modal: widget.modal,
         pickerFocusNode: widget.pickerFocusNode,
@@ -465,7 +471,7 @@ class _SingleBoardDateTimeContentState<T extends BoardDateTimeCommonResult>
       onCalendar: onCalendar,
       onChangeDate: changeDate,
       onChangTime: changeTime,
-      onKeyboadClose: closeKeyboard,
+      onKeyboardClose: closeKeyboard,
       onClose: close,
       backgroundColor: widget.options.getBackgroundColor(context),
       foregroundColor: widget.options.getForegroundColor(context),

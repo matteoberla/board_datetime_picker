@@ -13,11 +13,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Board DateTime Picker Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
         scaffoldBackgroundColor: const Color.fromARGB(255, 235, 235, 241),
         useMaterial3: false,
+        primaryColor: Colors.blue,
       ),
-      // home: const Home(),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 18, 18),
+        useMaterial3: false,
+        primaryColor: Colors.blue,
+      ),
+      themeMode: ThemeMode.system,
       home: const MySampleApp(),
     );
   }
@@ -50,7 +57,7 @@ class _MySampleAppState extends State<MySampleApp> {
         appBar: AppBar(
           title: const Text('Board DateTime Picker Example'),
         ),
-        backgroundColor: const Color.fromARGB(255, 245, 245, 250),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SingleChildScrollView(
           controller: scrollController,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),

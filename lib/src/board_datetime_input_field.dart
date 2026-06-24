@@ -553,6 +553,10 @@ class _BoardDateTimeInputFieldState<T extends BoardDateTimeCommonResult>
     closePicker(disposed: true);
     focusNodeDebounce?.cancel();
     focusNode.removeListener(_focusListener);
+    // Only dispose the FocusNode if it was created internally;
+    // externally provided nodes are owned by the caller.
+    if (widget.focusNode == null) focusNode.dispose();
+    pickerFocusNode.dispose();
     pickerDateState?.removeListener(pickerListener);
     textController.dispose();
     overlayAnimController.dispose();
@@ -1058,7 +1062,7 @@ class _BoardDateTimeInputFieldState<T extends BoardDateTimeCommonResult>
               pickerDateState!.addListener(pickerListener);
             },
             onCloseModal: onClosePicker,
-            onKeyboadClose: onClosePicker,
+            onKeyboardClose: onClosePicker,
             headerWidget: null,
             onTopActionBuilder: widget.onTopActionBuilder,
             embeddedOptions: const EmbeddedOptions(),

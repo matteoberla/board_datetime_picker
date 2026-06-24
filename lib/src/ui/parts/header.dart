@@ -20,7 +20,7 @@ class BoardDateTimeHeader extends StatefulWidget {
     required this.onCalendar,
     required this.onChangeDate,
     required this.onChangTime,
-    required this.onKeyboadClose,
+    required this.onKeyboardClose,
     required this.onClose,
     required this.backgroundColor,
     required this.foregroundColor,
@@ -67,7 +67,7 @@ class BoardDateTimeHeader extends StatefulWidget {
   final void Function(DateTime) onChangTime;
 
   /// Keyboard close request
-  final void Function() onKeyboadClose;
+  final void Function() onKeyboardClose;
 
   /// Picker close request
   final void Function() onClose;
@@ -231,7 +231,7 @@ class BoardDateTimeHeaderState extends State<BoardDateTimeHeader> {
           //     opacity: 0.8 * (1 - widget.keyboardHeightRatio),
           //     child: IconButton(
           //       onPressed: () {
-          //         widget.onKeyboadClose();
+          //         widget.onKeyboardClose();
           //       },
           //       icon: const Icon(
           //         Icons.keyboard_hide_rounded,
@@ -409,7 +409,7 @@ class BoardDateTimeNoneButtonHeader extends StatefulWidget {
     required this.keyboardHeightRatio,
     required this.calendarAnimation,
     required this.onCalendar,
-    required this.onKeyboadClose,
+    required this.onKeyboardClose,
     required this.onClose,
     required this.modal,
     required this.pickerFocusNode,
@@ -437,7 +437,7 @@ class BoardDateTimeNoneButtonHeader extends StatefulWidget {
   final void Function() onCalendar;
 
   /// Keyboard close request
-  final void Function() onKeyboadClose;
+  final void Function() onKeyboardClose;
 
   /// Picker close request
   final void Function() onClose;
@@ -558,7 +558,7 @@ class _BoardDateTimeNoneButtonHeaderState
     //       icon: Icons.keyboard_hide_rounded,
     //       bgColor: widget.options.getForegroundColor(context),
     //       fgColor: widget.options.getTextColor(context),
-    //       onTap: widget.onKeyboadClose,
+    //       onTap: widget.onKeyboardClose,
     //       buttonSize: buttonSize,
     //     ),
     //   );

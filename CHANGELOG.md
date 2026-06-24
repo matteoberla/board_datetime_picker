@@ -1,3 +1,10 @@
+## 2.8.6
+
+* Fixed the correction flash animation using a stale foreground color after the theme changed.
+* Fixed memory leaks by disposing focus nodes, timers, animation controllers and notifiers that were left undisposed (`BoardDateTimeBuilder`, `BoardDateTimeInputField`, `BoardMultiDateTimeController`, picker item widgets).
+* Fixed an issue where focus listeners on picker item options were not removed when the picker type changed, which could cause stale callbacks to fire.
+* Replaced deprecated `SizeTransition.axisAlignment` with `alignment`.
+
 ## 2.8.5
 
 * Fixed the issue where items lag when minimumDate and maximumDate are too large.

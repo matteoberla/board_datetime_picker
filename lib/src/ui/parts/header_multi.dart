@@ -20,7 +20,7 @@ class BoardDateTimeMultiHeader extends StatefulWidget {
     required this.keyboardHeightRatio,
     required this.calendarAnimation,
     required this.onCalendar,
-    required this.onKeyboadClose,
+    required this.onKeyboardClose,
     required this.onClose,
     required this.backgroundColor,
     required this.foregroundColor,
@@ -71,7 +71,7 @@ class BoardDateTimeMultiHeader extends StatefulWidget {
   final void Function() onCalendar;
 
   /// Keyboard close request
-  final void Function() onKeyboadClose;
+  final void Function() onKeyboardClose;
 
   /// Picker close request
   final void Function() onClose;

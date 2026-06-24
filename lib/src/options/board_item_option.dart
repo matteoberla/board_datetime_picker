@@ -365,8 +365,8 @@ class BoardPickerItemOption {
     // AMとPMの値に合わせて24時間表記の時間を置き換える
     final hour = itemMap[selectedIndex];
 
-    Map<int, AmpmCotrast> current;
-    Map<int, AmpmCotrast> next;
+    Map<int, AmpmContrast> current;
+    Map<int, AmpmContrast> next;
     if (ampm == AmPm.am) {
       current = DateTimeUtil.ampmContrastAmMap;
       next = DateTimeUtil.ampmContrastPmMap;

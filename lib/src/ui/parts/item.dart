@@ -65,8 +65,8 @@ class ItemWidgetState extends State<ItemWidget>
   bool _isAnimating = false;
 
   /// Timer for debouncing process
-  Timer? debouceTimer;
-  Timer? wheelDebouceTimer;
+  Timer? debounceTimer;
+  Timer? wheelDebounceTimer;
 
   /// Number of items to display in the list
   int get wheelCount => widget.wide || widget.embeddedOptions.fixed ? 7 : 5;
@@ -99,13 +99,13 @@ class ItemWidgetState extends State<ItemWidget>
   int getWheelIndex(int index) {
     if (useAmpmMode) {
       final hour = widget.option.itemMap[index];
-      final cotrast = DateTimeUtil.ampmContrastMap[hour]!;
+      final contrast = DateTimeUtil.ampmContrastMap[hour]!;
       final i = map.entries
           .firstWhereOrNull(
-            (x) => x.value == cotrast.hour,
+            (x) => x.value == contrast.hour,
           )
           ?.key;
-      return i ?? cotrast.index;
+      return i ?? contrast.index;
       // return DateTimeUtil.ampmContrastMap[hour]!.index;
     } else {
       return index;
@@ -115,7 +115,7 @@ class ItemWidgetState extends State<ItemWidget>
   /// Notify caller of changed index
   void callbackOnChange(int index) {
     if (useAmpmMode) {
-      Map<int, AmpmCotrast> contrastMap;
+      Map<int, AmpmContrast> contrastMap;
       if (widget.option.ampm! == AmPm.am) {
         contrastMap = DateTimeUtil.ampmContrastAmMap;
       } else {
@@ -178,8 +178,24 @@ class ItemWidgetState extends State<ItemWidget>
   }
 
   @override
+  void didUpdateWidget(ItemWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.foregroundColor != widget.foregroundColor) {
+      correctColor = ColorTween(
+        begin: widget.foregroundColor,
+        end: Colors.redAccent.withValues(alpha: 0.8),
+      ).animate(correctAnimationController);
+    }
+  }
+
+  @override
   void dispose() {
     widget.option.focusNode.removeListener(focusListener);
+    debounceTimer?.cancel();
+    wheelDebounceTimer?.cancel();
+    _updateTimer?.cancel();
+    correctAnimationController.dispose();
+    pickerFocusNode.dispose();
     scrollController.dispose();
     textController.dispose();
     super.dispose();
@@ -206,16 +222,16 @@ class ItemWidgetState extends State<ItemWidget>
       if (textController.text != text) {
         textController.text = text;
       }
-      debouceTimer?.cancel();
-      debouceTimer = null;
+      debounceTimer?.cancel();
+      debounceTimer = null;
     }
 
     // Debounce process to prevent inadvertent text updates when in focus
     if (widget.option.focusNode.hasFocus) {
-      debouceTimer?.cancel();
+      debounceTimer?.cancel();
       // Ignore empty characters as they do not need to be scrolled.
       if (textController.text != '') {
-        debouceTimer = Timer(const Duration(milliseconds: 300), setText);
+        debounceTimer = Timer(const Duration(milliseconds: 300), setText);
       }
     } else {
       setText();
@@ -515,16 +531,16 @@ class ItemWidgetState extends State<ItemWidget>
 
   /// Processing when text is changed
   void onChangeText(String text) {
-    wheelDebouceTimer?.cancel();
+    wheelDebounceTimer?.cancel();
 
     final index = _convertTextToIndex(text);
     if (index == null || index < 0) return;
     // Animated wheel movement
-    wheelDebouceTimer = Timer(
+    wheelDebounceTimer = Timer(
       const Duration(milliseconds: 200),
       () {
-        wheelDebouceTimer?.cancel();
-        wheelDebouceTimer = null;
+        wheelDebounceTimer?.cancel();
+        wheelDebounceTimer = null;
         toAnimateChange(index);
       },
     );
@@ -654,6 +670,7 @@ class AmpmItemWidgetState extends State<AmpmItemWidget> {
 
   @override
   void dispose() {
+    pickerFocusNode.dispose();
     scrollController.dispose();
     super.dispose();
   }

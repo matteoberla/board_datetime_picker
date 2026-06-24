@@ -28,7 +28,7 @@ class PickerCalendarArgs {
   final ValueNotifier<DateTime>? endDate;
   final void Function(DateTime start, DateTime end)? onMultiChange;
   final void Function(MultiCurrentDateType)? onChangeDateType;
-  final void Function() onKeyboadClose;
+  final void Function() onKeyboardClose;
 
   const PickerCalendarArgs({
     required this.dateState,
@@ -46,7 +46,7 @@ class PickerCalendarArgs {
     this.endDate,
     this.onMultiChange,
     this.onChangeDateType,
-    required this.onKeyboadClose,
+    required this.onKeyboardClose,
   });
 }
 
@@ -342,7 +342,7 @@ abstract class PickerCalendarState<T extends PickerCalendarWidget>
                 bgColor: args.options.getForegroundColor(context),
                 fgColor:
                     args.options.getTextColor(context)?.withValues(alpha: 0.6),
-                onTap: args.onKeyboadClose,
+                onTap: args.onKeyboardClose,
                 // buttonSize: buttonSize,
               ),
             ],
