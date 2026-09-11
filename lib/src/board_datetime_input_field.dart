@@ -511,6 +511,7 @@ class _BoardDateTimeInputFieldState<T extends BoardDateTimeCommonResult>
           initial != null ? DateFormat(format).format(rangeDate(initial)) : "",
     );
     textController.addListener(() {});
+    print("inittext: ${textController.text}");
 
     pickerFocusNode = PickerContentsFocusNode(
       debugLabel: 'Picker Focus Node',
