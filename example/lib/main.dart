@@ -666,13 +666,14 @@ class InputFieldWidget extends StatelessWidget {
             height: 44,
             child: BoardDateTimeInputField(
               controller: textController,
-              pickerType: DateTimePickerType.datetime,
+              pickerType: DateTimePickerType.time,
+              showPicker: false,
               options: const BoardDateTimeOptions(
                 languages: BoardPickerLanguages.en(),
                 // The following parameters are only for `time`
                 // withSecond: true,
               ),
-              initialDate: DateTime.now(),
+              initialDate: null /*DateTime.now()*/,
               maximumDate: DateTime(2040),
               minimumDate: DateTime(1900, 1, 1),
               // showPickerType: BoardDateTimeFieldPickerType.mini,

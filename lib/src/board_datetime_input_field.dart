@@ -403,6 +403,7 @@ class _BoardDateTimeInputFieldState<T extends BoardDateTimeCommonResult>
   /// Listener to detect date and time changes in the picker
   void pickerListener() {
     final val = pickerDateState?.value;
+    print("pickerListener $val");
     if (val != null) {
       void apply() {
         textController.text = DateFormat(format).format(val);
@@ -501,14 +502,13 @@ class _BoardDateTimeInputFieldState<T extends BoardDateTimeCommonResult>
     DateTime? initial;
     if (widget.initialDate != null) {
       initial = rangeDate(widget.initialDate!);
-      selectedDate = initial;
-      widget.controller?.updateSelectedDate(selectedDate);
     }
+    selectedDate = initial;
+    widget.controller?.updateSelectedDate(selectedDate);
 
     textController = TextEditingController(
-      text: initial != null
-          ? DateFormat(format).format(rangeDate(initial))
-          : null,
+      text:
+          initial != null ? DateFormat(format).format(rangeDate(initial)) : "",
     );
     textController.addListener(() {});
 
