@@ -78,7 +78,7 @@ class BoardDateTimeTextController {
   @protected
   void updateSelectedDate(DateTime? newDate) {
     _selectedDate = newDate;
-    print("updateSelectedDate - $_selectedDate");
+    print("updateSelectedDate - $_selectedDate - $hashCode");
   }
 
   DateTime? get selectedDate {
@@ -403,7 +403,6 @@ class _BoardDateTimeInputFieldState<T extends BoardDateTimeCommonResult>
   /// Listener to detect date and time changes in the picker
   void pickerListener() {
     final val = pickerDateState?.value;
-    print("pickerListener $val");
     if (val != null) {
       void apply() {
         textController.text = DateFormat(format).format(val);
